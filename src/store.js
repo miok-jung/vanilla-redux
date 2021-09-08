@@ -1,5 +1,10 @@
 import { createStore } from "redux";
-import { configureStore, createAction, createReducer } from "@reduxjs/toolkit";
+import {
+  configureStore,
+  createAction,
+  createReducer,
+  createSlice,
+} from "@reduxjs/toolkit";
 
 // SECTION No ReactToolkit
 // const ADD = "ADD";
@@ -29,8 +34,8 @@ import { configureStore, createAction, createReducer } from "@reduxjs/toolkit";
 //   }
 // };
 // SECTION USE React Tool kit
-const addToDo = createAction("ADD");
-const deleteToDo = createAction("DELETE");
+// const addToDo = createAction("ADD");
+// const deleteToDo = createAction("DELETE");
 
 // const reducer = (state = [], action) => {
 //   switch (action.type) {
@@ -43,23 +48,34 @@ const deleteToDo = createAction("DELETE");
 //   }
 // };
 // createReducer : switch와 case를 생략할 수 있게 도와준다. redux Toolkit은 위에 코드같은것을, 아래처럼 간단하게 작성할 수 있도록 도와주는 것.
-const reducer = createReducer([], {
-  [addToDo]: (state, action) => {
-    // state를 mutate를 할 수 있다.
-    state.push({ text: action.payload, id: Date.now() });
-  },
-  [deleteToDo]: (state, action) => {
-    // 새로운 new state 만들 수 있다.?
-    state.filter((toDo) => toDo.id !== action.payload);
+// const reducer = createReducer([], {
+//   [addToDo]: (state, action) => {
+//     // state를 mutate를 할 수 있다.
+//     state.push({ text: action.payload, id: Date.now() });
+//   },
+//   [deleteToDo]: (state, action) => {
+//     // 새로운 new state 만들 수 있다.?
+//     state.filter((toDo) => toDo.id !== action.payload);
+//   },
+// });
+
+const toDos = createSlice({
+  name: "toDosReducer",
+  initialState: [],
+  reducers: {
+    add: (state, action) => {
+      state.push({ text: action.payload, id: Date.now() });
+    },
+    remove: (state, action) =>
+      state.filter((toDo) => toDo.id !== action.payload),
   },
 });
-
 // const store = createStore(reducer);
-const store = configureStore({ reducer });
+const store = configureStore({ reducer: toDos.reducer });
 
-export const actionCreators = {
-  addToDo,
-  deleteToDo,
-};
-
+// export const actionCreators = {
+//   addToDo,
+//   deleteToDo,
+// };
+export const { add, remove } = toDos.actions;
 export default store;

@@ -1,5 +1,6 @@
 # Vanilla Redux
 
-Learning Vanilla-Redux and React-Redux
+## Study Date : 21. 05. 26 ~ 21. 09. 08
 
-## Study Date : 21. 05. 26 ~
+- Learning Vanilla-Redux and React-Redux
+- Redux Tool Kit
